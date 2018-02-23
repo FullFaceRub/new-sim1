@@ -16,6 +16,11 @@ massive(process.env.CONNECTION_STRING).then((db) => {
 
 app.post('/api/newbin', (req, res)=>{
     console.log(req.body);
+    const db = req.app.get('db');
+    let {binName, binContent, binPrice, shelfId} = req.body;
+    db.newBin([binName, binContent, binPrice, shelfId]).then((bin=>{
+        res.status(200).send(bin);
+    }))
 })
 
 app.put('/api/updatebin/:id', (req, res)=>{
